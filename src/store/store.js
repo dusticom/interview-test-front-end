@@ -7,19 +7,21 @@ import reducer from "./reducer";
 
 import DataCache from "./dataCache";
 
-const logger = store => next => action => {
+const logger = (store) => (next) => (action) => {
   console.log("action:", action);
   return next(action);
 };
 
 export const setupStore = ({ httpApi }) => {
-
   const middlewares = [];
-
+  const debouncedHttpApi = {
+    ...httpApi,
+    getFirst5MatchingContacts: debounce(httpApi.getFirst5MatchingContacts, 300),
+  };
   middlewares.push(
     reduxThunk.withExtraArgument({
       // TODO something is missing here
-      httpApi: httpApi,
+      httpApi: debouncedHttpApi,
       dataCache: new DataCache(),
     }),
   );
@@ -30,8 +32,6 @@ export const setupStore = ({ httpApi }) => {
 
   return createStore(
     reducer,
-    composeWithDevTools(
-      applyMiddleware(...middlewares),
-    ),
+    composeWithDevTools(applyMiddleware(...middlewares)),
   );
 };

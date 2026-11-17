@@ -15,7 +15,6 @@ const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-
     case UPDATE_SEARCH_PHRASE__START:
       return {
         ...state,
@@ -33,20 +32,19 @@ const reducer = (state = initialState, action) => {
     case UPDATE_SEARCH_PHRASE__FAILURE:
       return {
         ...state,
-        searchFailure: false,
+        searchFailure: true,
       };
 
     // TODO something is wrong here
     case SELECT_MATCHING_CONTACT:
       return {
         ...state,
-        phrase: payload.selectedMatchingContact.id,
+        phrase: payload.selectedMatchingContact.value,
         matchingContacts: [],
       };
 
     default:
       return state;
-
   }
 };
 

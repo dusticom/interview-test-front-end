@@ -13,30 +13,31 @@ const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-
     // TODO something is missing here
     case FETCH_CONTACT_DETAILS__START:
       return {
         ...state,
         fetchedContact: null,
+        fetchFailure: false,
       };
 
     // TODO something is wrong here
     case FETCH_CONTACT_DETAILS__SUCCESS:
       return {
         ...state,
-        fetchedContact: null,
+        fetchedContact: payload.contactDetails,
+        fetchFailure: false,
       };
 
     case FETCH_CONTACT_DETAILS__FAILURE:
       return {
         ...state,
         fetchFailure: true,
+        fetchedContact: null,
       };
 
     default:
       return state;
-
   }
 };
 

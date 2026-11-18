@@ -13,7 +13,7 @@ const MatchingContacts = (
   },
 ) => {
   // TODO something is missing here
-
+  if(!data.length) return null;
   return (
     <ul
       {...downshiftGetMenuProps()}
@@ -28,7 +28,7 @@ const MatchingContacts = (
             className: classNames(
               "MatchingContacts_item",
               {
-                "MatchingContacts_item_highlighted": false,
+                "MatchingContacts_item_highlighted": highlightedIndex === index
               }),
           })}
         >

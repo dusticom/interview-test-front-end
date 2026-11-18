@@ -15,11 +15,17 @@ const logger = store => next => action => {
 export const setupStore = ({ httpApi }) => {
 
   const middlewares = [];
+  const debouncedHttpApi = {
+    ...httpApi,
+    getFirst5MatchingContacts: debounce(
+      httpApi.getFirst5MatchingContacts,300
+    )
+  }
 
   middlewares.push(
     reduxThunk.withExtraArgument({
       // TODO something is missing here
-      httpApi: httpApi,
+      httpApi: debouncedHttpApi,
       dataCache: new DataCache(),
     }),
   );
